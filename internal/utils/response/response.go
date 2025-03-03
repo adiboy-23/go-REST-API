@@ -11,7 +11,7 @@ import (
 
 type Response struct {
 	Status string `json:"status"`
-	Error  string `json:"error`
+	Error  string `json:"error"`
 }
 
 const (
@@ -41,15 +41,14 @@ func ValidationError(errs validator.ValidationErrors) Response {
 		switch err.ActualTag() {
 		case "required":
 			errMsgs = append(errMsgs, fmt.Sprintf("field %s is required field", err.Field()))
+		default:
+			errMsgs = append(errMsgs, fmt.Sprintf("field %s is invalid", err.Field()))
 		}
-	default:
-		errMsgs = append(errMsgs, fmt.Sprintf("field %s is invalid", err.Field()))
 	}
 
-	return Response {
+	return Response{
 		Status: StatusError,
-		Error: strings.Join((errMsgs, ",")),
+		Error:  strings.Join(errMsgs, ","),
 	}
-
 
 }
