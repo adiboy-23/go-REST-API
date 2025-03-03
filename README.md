@@ -13,20 +13,32 @@ A simple RESTful API built with Go that manages student records using SQLite as 
 - Error handling
 
 ## Project Structure
+```
 .
 ├── cmd/
-│ └── go-REST-API/
-│ └── main.go # Application entry point
+│   └── go-REST-API/
+│       └── main.go                 # Application entry point
 ├── internal/
-│ ├── config/ # Configuration management
-│ ├── http/
-│ │ └── handlers/ # HTTP request handlers
-│ ├── storage/ # Database interfaces and implementations
-│ ├── types/ # Data models
-│ └── utils/ # Utility functions
+│   ├── config/                     # Configuration management
+│   │   └── config.go
+│   ├── http/
+│   │   └── handlers/
+│   │       └── student/            # HTTP request handlers
+│   │           └── student.go
+│   ├── storage/                    # Database interfaces and implementations
+│   │   ├── storage.go             # Storage interface
+│   │   └── sqlite/
+│   │       └── sqlite.go          # SQLite implementation
+│   ├── types/                      # Data models
+│   │   └── types.go
+│   └── utils/
+│       └── response/               # Utility functions
+│           └── response.go
 ├── config/
-│ └── local.yaml # Configuration file
-└── storage/ # Database files
+│   └── local.yaml                  # Configuration file
+└── storage/                        # Database files
+    └── storage.db
+```
 
 
 ## API Endpoints
@@ -60,9 +72,9 @@ go mod download
         address: "localhost:8082"
     ```
 ### Running the Application
-    ```
+```
         go run cmd/go-REST-API/main.go -config config/local.yaml
-    ```
+```
 
 ## API Usage Examples
 
