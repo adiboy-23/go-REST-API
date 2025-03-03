@@ -13,6 +13,7 @@ import (
 
 	"github.com/adiboy-23/go-REST-API/internal/config"
 	"github.com/adiboy-23/go-REST-API/internal/http/handlers/student"
+	"github.com/adiboy-23/go-REST-API/internal/storage/sqlite"
 )
 
 func main() {
@@ -20,6 +21,12 @@ func main() {
 	cfg := config.MustLoad()
 
 	//database setup
+	_, err := sqlite.New(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	slog.Info("Storage initalized", slog.String("env", cfg.Env), slog.String("version", "1.0.0"))
 
 	//setup router
 	router := http.NewServeMux()
@@ -53,7 +60,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err := server.Shutdown(ctx)
+	err = server.Shutdown(ctx)
+
 	if err != nil {
 		slog.Error("Failed to shutdown server", slog.String("error", err.Error()))
 	}
