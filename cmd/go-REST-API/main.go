@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/adiboy-23/go-REST-API/internal/config"
+	"github.com/adiboy-23/go-REST-API/internal/http/handlers/student"
 )
 
 func main() {
@@ -23,9 +24,7 @@ func main() {
 	//setup router
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) { // ther is a request pointer not object
-		w.Write([]byte("Welcome to Student API"))
-	})
+	router.HandleFunc("POST /api/students", student.New())
 
 	//setup http server
 	server := http.Server{
